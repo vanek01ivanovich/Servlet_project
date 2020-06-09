@@ -22,12 +22,12 @@ public class JDBCTicketDao implements TicketDao {
     private TrainMapper trainMapper;
     private DestinationsMapper destinationsMapper;
 
+
     private ResourceBundle resourceBundle = ResourceBundle.getBundle("databaseRequest");
 
     private final String ADD_TICKET = "add.ticket";
     private final String FIND_USERS_AND_TICKETS = "find.users.and.tickets";
-
-
+    private final String USER_SELECT_ALL = "find.exist.users";
 
     JDBCTicketDao(Connection connection){this.connection = connection;}
 
@@ -35,16 +35,7 @@ public class JDBCTicketDao implements TicketDao {
 
     @Override
     public void create(Ticket ticket) {
-        try (PreparedStatement preparedStatement =
-                connection.prepareStatement(resourceBundle.getString(ADD_TICKET))){
 
-            preparedStatement.setInt(1,ticket.getIdUser());
-            preparedStatement.setInt(2,ticket.getIdDestinationProperty());
-            preparedStatement.executeUpdate();
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -53,16 +44,16 @@ public class JDBCTicketDao implements TicketDao {
     }
 
     @Override
-    public void update(Ticket entity) {
-
-    }
+    public void update(Ticket entity) {}
 
     @Override
-    public void delete(Ticket entity) {
-
-    }
+    public void delete(Ticket entity) {}
 
 
+    /**
+     * Method that finds allTickets from db
+     * @return List of users that have tickets
+     */
     @Override
     public List<User> findAllUsersAndTickets() {
         List<User> userAndTicketsList = new ArrayList<>();
@@ -91,5 +82,57 @@ public class JDBCTicketDao implements TicketDao {
             e.printStackTrace();
         }
         return userAndTicketsList;
+    }
+
+    /**
+     * Method add new tickets to db
+     * Also method has transactions
+     * @param ticket needed for setting items in preparedStatement
+     * @param user needed for setting items in preparedStatement
+     * @param property needed for setting items in preparedStatement
+     */
+    @Override
+    public void addNewTicketTransaction(Ticket ticket, User user, DestinationProperty property) {
+
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        try{
+            userMapper = new UserMapper();
+            connection.setAutoCommit(false);
+
+            preparedStatement = connection.prepareStatement(resourceBundle.getString(USER_SELECT_ALL),
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            preparedStatement.setString(1,user.getUserName());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int userMoney = resultSet.getInt("money") - property.getPrice();
+                userMapper.userAdminTransaction(resultSet,userMoney);
+                user.setMoney(userMoney);
+            }
+
+            preparedStatement = connection.prepareStatement(resourceBundle.getString(USER_SELECT_ALL),
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            preparedStatement.setString(1,"admin01");
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int adminMoney = resultSet.getInt("money") + property.getPrice();
+                userMapper.userAdminTransaction(resultSet, adminMoney);
+            }
+
+            preparedStatement = connection.prepareStatement(resourceBundle.getString(ADD_TICKET));
+            preparedStatement.setInt(1,ticket.getIdUser());
+            preparedStatement.setInt(2,ticket.getIdDestinationProperty());
+            preparedStatement.executeUpdate();
+
+            connection.commit();
+            connection.setAutoCommit(true);
+        }catch (SQLException e){
+            e.printStackTrace();
+            try{
+                connection.rollback();
+            }catch (SQLException ex){
+                ex.printStackTrace();
+            }
+        }
     }
 }

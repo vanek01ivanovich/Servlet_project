@@ -3,6 +3,9 @@ body{
     background: url("https://revistas.unne.edu.ar/public/site/background/backgroundSite03.jpg");
     background-size: cover;
 }
+.userInfo{
+    color: white;
+}
 
 .container{
 

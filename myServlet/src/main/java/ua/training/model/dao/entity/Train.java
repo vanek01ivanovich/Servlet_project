@@ -27,9 +27,6 @@ public class Train {
         this.trainName = trainName;
     }
 
-
-
-
     public String getTrainNameUA() {
         return trainNameUA;
     }

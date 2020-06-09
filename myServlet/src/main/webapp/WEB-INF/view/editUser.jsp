@@ -42,11 +42,11 @@
         </div>
     </nav>
 </header>
-
+<input type="hidden" value="${alert}" id="button">
 <form  method="post">
     <div class="container card text-center">
         <div class="card-header">
-            Edit user <h5>${user.getUserName()}</h5>
+            <h5>Edit user</h5>
         </div>
         <div class="row">
             <div class="col-sm ">
@@ -59,7 +59,7 @@
                         </div>
                         <c:if test="${validUserName == false}">
                             <div class="alert alert-danger" role="alert">
-                                user LOL
+                                <fmt:message key="regex.userName.error"/>
                             </div>
                         </c:if>
 
@@ -71,7 +71,7 @@
                         </div>
                         <c:if test="${validFirstName == false}">
                             <div class="alert alert-danger" role="alert">
-                                user LOL
+                                <fmt:message key="regex.firstName.error"/>
                             </div>
                         </c:if>
 
@@ -84,7 +84,7 @@
                         </div>
                         <c:if test="${validLastName == false}">
                             <div class="alert alert-danger" role="alert">
-                                user LOL
+                                <fmt:message key="regex.lastName.error"/>
                             </div>
                         </c:if>
 
@@ -97,7 +97,7 @@
                         </div>
                         <c:if test="${validFirstNameUkr == false}">
                             <div class="alert alert-danger" role="alert">
-                                user LOL
+                                <fmt:message key="regex.firstNameUkr.error"/>
                             </div>
                         </c:if>
 
@@ -111,7 +111,7 @@
                         </div>
                         <c:if test="${validLastNameUkr == false}">
                             <div class="alert alert-danger" role="alert">
-                                user LOL
+                                <fmt:message key="regex.lastNameUkr.error"/>
                             </div>
                         </c:if>
 
@@ -154,4 +154,15 @@
     <div id="footer" class="card-footer text-muted text-white bg-dark">© 2020 Copyright:All rights reserved</div>
 </footer>
 </body>
+<script>
+    var al = document.getElementById("button").value;
+
+
+    if (al === "0"){
+        swal({
+            icon:"error",
+            text:"Some problems with edit user"
+        });
+    }
+</script>
 </html>

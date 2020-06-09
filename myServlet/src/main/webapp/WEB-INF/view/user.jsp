@@ -30,11 +30,17 @@
 <header>
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="/user">HOME</a>
-        <h1>
+
+        <div class="userInfo">
             <fmt:message key="user.hi"/>
             ${user.getUserName()}
+            <br>
+            Your money
+            ${user.getMoney()}
+        </div>
 
-        </h1>
+
+
         <form action="/logout">
             <button id="logout" type="submit" class="btn btn-outline-warning"><fmt:message key="logout"/></button>
         </form>
@@ -50,9 +56,31 @@
     </nav>
 </header>
 
+<input type="hidden" value="${alert}" id="button">
 
 <form action="/findroute">
     <button type="submit" class="btn btn-warning">Find Route</button>
+</form>
+
+<form action="/user" method="post">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input required type="number" name="cardNumber" class="form-control" id="cardNumber" placeholder="Enter your card number">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your card number with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="amountMoney">Amount</label>
+                <input required type="number" name="money"  id="amountMoney" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter your amount">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">TOP-UP</button>
+        </div>
+    </div>
 </form>
 
 
@@ -61,6 +89,23 @@
     <div id="footer" class="card-footer text-muted text-white bg-dark"><fmt:message key="footer"/></div>
 </footer>
 
+<script>
+    var al = document.getElementById("button").value;
+
+    if (al === "1"){
+        swal({
+            icon:"success",
+            text:"You have filled up your card successfully!"
+        });
+    }
+
+    if (al === "0"){
+        swal({
+            icon:"error",
+            text:"Some problems with filling up!"
+        });
+    }
+</script>
 
 </body>
 </html>

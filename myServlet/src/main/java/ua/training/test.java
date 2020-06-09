@@ -7,8 +7,7 @@ import java.util.regex.Pattern;
 
 public class test {
   public static void main(String[] args) {
-     int a = 8/3;
-  System.out.println(a%3);
+
 
   }
 }

@@ -21,6 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
 </head>
 <style>
@@ -32,6 +33,13 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="/user">HOME</a>
 
+        <div class="userInfo">
+            <fmt:message key="user.hi"/>
+            ${user.getUserName()}
+            <br>
+            Your money
+            ${user.getMoney()}
+        </div>
         <form action="/logout">
             <button id="logout" type="submit" class="btn btn-outline-warning"><fmt:message key="logout"/></button>
         </form>
@@ -46,6 +54,7 @@
         </div>
     </nav>
 </header>
+<input type="hidden" value="${alert}" id="button">
 <form action="/ticket" method="post">
 <div class="container card text-center">
     <div class="card-header">
@@ -54,6 +63,7 @@
     <div class="card-body">
 
             <input type="hidden" name="idProperty" value="${ticket.getIdProperty()}">
+        <%--TODO ukr last first name--%>
             <div class="info">
                 <span><fmt:message key="first.name"/></span>
                 ${user.getFirstName()}
@@ -138,6 +148,19 @@
 
 </div>
 </form>
+<footer class="text-white bg-dark">
+    <div id="footer" class="card-footer text-muted text-white bg-dark"><fmt:message key="footer"/></div>
+</footer>
 
+<script>
+    var al = document.getElementById("button").value;
+
+    if (al === "0"){
+        swal({
+            icon:"error",
+            text:"Top-up your money bro!"
+        });
+    }
+</script>
 </body>
 </html>

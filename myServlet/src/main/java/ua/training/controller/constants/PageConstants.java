@@ -1,6 +1,7 @@
 package ua.training.controller.constants;
 
 public interface PageConstants {
+    //TODO path to web-inf
     String EDIT_USER_PAGE = "/WEB-INF/view/editUser.jsp";
     String FIND_ROUTE_PAGE = "WEB-INF/view/findRoute.jsp";
     String LOGIN_PAGE = "WEB-INF/view/login.jsp";

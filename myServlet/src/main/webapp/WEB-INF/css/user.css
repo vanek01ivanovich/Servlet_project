@@ -7,8 +7,13 @@ h1{
     color: white;
 }
 
+.userInfo{
+    color: white;
+}
+
+/*
 #logout{
     position: relative;
     left: 450px;
     bottom: -9px;
-}
+}*/

@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class JDBCUserDao implements UserDao {
@@ -26,6 +27,7 @@ public class JDBCUserDao implements UserDao {
     private final String FIND_ALL_USERS = "find.all.users";
     private final String UPDATE_USERS = "update.users";
     private final String FIND_EXIST_USERS = "find.exist.users";
+    private final String FIND_EXIST_CARD_NUMBER = "find.exist.card.number";
     private final String ADD_NEW_USER = "add.new.user";
 
     JDBCUserDao(Connection connection) {
@@ -33,28 +35,94 @@ public class JDBCUserDao implements UserDao {
     }
 
 
-
+    /**
+     * Method make transaction of user money
+     * @param user needed in order to top up money
+     * @param cardNumber users cardNumber
+     * @param money value that user wants to top up
+     * @return boolean value if transaction was successfully
+     */
     @Override
-    public User checkLogin(String userName){
-        User user = null;
-        try (PreparedStatement preparedStatement =
-                connection.prepareStatement(resourceBundle.getString(FIND_EXIST_USERS))){
-            preparedStatement.setString(1,userName);
+    public boolean topUpCardNumber(User user, int cardNumber,int money){
+        PreparedStatement preparedStatement;
+
+        try{
+
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(resourceBundle.getString(FIND_EXIST_USERS),
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            preparedStatement.setString(1,user.getUserName());
             ResultSet resultSet = preparedStatement.executeQuery();
+            int number = 0;
+            if (resultSet.next()){
+                number = resultSet.getInt("card_number");
 
-
-            userMapper = new UserMapper();
-            if(resultSet.next()){
-                user = userMapper.extractFromResultSet(resultSet);
-
+                if (cardNumber != number){
+                    return false;
+                }else{
+                    resultSet.updateInt("money",user.getMoney()+money);
+                    resultSet.updateRow();
+                }
             }
+            connection.commit();
+            connection.setAutoCommit(true);
 
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-        return user;
+        return true;
     }
 
+    /**
+     * Method checks whether user`s cardNumber is exist
+     * @param cardNumber needed for checking user`s cardNumber
+     * @return boolean value that depends on
+     */
+    @Override
+    public boolean isCardExist(String cardNumber) {
+        try (PreparedStatement preparedStatement =
+                     connection.prepareStatement(resourceBundle.getString(FIND_EXIST_CARD_NUMBER))){
+            preparedStatement.setString(1,cardNumber);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
+
+    /**
+     * Method check if login is right
+     * @param userName needed for authentication on login page
+     * @return Optional value of User object
+     */
+    @Override
+    public Optional<User> checkLogin(String userName){
+        Optional<User> userOptional;
+        try (PreparedStatement preparedStatement =
+                connection.prepareStatement(resourceBundle.getString(FIND_EXIST_USERS))){
+            preparedStatement.setString(1,userName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            userMapper = new UserMapper();
+
+            userOptional = Optional.ofNullable(resultSet.next() ? userMapper.extractFromResultSet(resultSet): null);
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return userOptional;
+    }
+
+    /**
+     * Method checks if user exists
+     * Return boolean value
+     * @param userName needed for checking if user exists
+     * @return boolean value
+     */
     @Override
     public boolean isExistUser(String userName) {
         try (PreparedStatement preparedStatement =
@@ -62,15 +130,17 @@ public class JDBCUserDao implements UserDao {
             preparedStatement.setString(1,userName);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(resultSet.next()){
-                return true;
-            }
+            return resultSet.next();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
+    /**
+     * @param request for filling preparedStatement values
+     */
     @Override
     public void saveNewUser(HttpServletRequest request) {
         try (PreparedStatement preparedStatement =
@@ -82,6 +152,8 @@ public class JDBCUserDao implements UserDao {
                 preparedStatement.setString(5, RoleStatus.ROLE_USER.toString());
                 preparedStatement.setString(6, encoder.hashPassword(request.getParameter("password")));
                 preparedStatement.setString(7,request.getParameter("userName"));
+                preparedStatement.setString(8,"0");
+                preparedStatement.setString(9,request.getParameter("cardNumber"));
                 preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -95,9 +167,13 @@ public class JDBCUserDao implements UserDao {
 
     }
 
+    /**
+     * Method finds all users in db
+     * @return List of Users
+     */
     @Override
     public List<User> findAll() {
-        List<User> listUserr = new ArrayList<>();
+        List<User> listUser = new ArrayList<>();
         try(PreparedStatement preparedStatement =
                 connection.prepareStatement(resourceBundle.getString(FIND_ALL_USERS))){
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -105,17 +181,20 @@ public class JDBCUserDao implements UserDao {
             userMapper = new UserMapper();
 
             while(resultSet.next()){
-                User user = new User();
-                user = userMapper.extractFromResultSet(resultSet);
-                listUserr.add(user);
+                User user =  userMapper.extractFromResultSet(resultSet);
+                listUser.add(user);
             }
 
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return listUserr;
+        return listUser;
     }
 
+    /**
+     * Method update user in db using preparedStatement
+     * @param newUser needed for updating user in db
+     */
     @Override
     public void update(User newUser) {
         try(PreparedStatement preparedStatement =
@@ -132,6 +211,10 @@ public class JDBCUserDao implements UserDao {
         }
     }
 
+    /**
+     * Method delete user from db
+     * @param user needed for deleting value in db
+     */
     @Override
     public void delete(User user) {
         try(PreparedStatement preparedStatement =

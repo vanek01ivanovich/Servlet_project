@@ -30,8 +30,6 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCTicketDao(getConnection());
     }
 
-
-
     private Connection getConnection(){
         try {
             return dataSource.getConnection();

@@ -1,12 +1,8 @@
 package ua.training.controller;
 
-
 import ua.training.controller.commands.*;
 import ua.training.controller.security.UserSessionSecurity;
-import ua.training.model.service.ApplicationService;
-import ua.training.model.service.DestinationPropertyService;
-import ua.training.model.service.TicketService;
-import ua.training.model.service.UserService;
+import ua.training.model.service.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,10 +22,11 @@ public class Servlet extends  HttpServlet {
     private TicketService ticketService = new TicketService();
     private UserSessionSecurity userSessionSecurity = new UserSessionSecurity();
 
+
     @Override
     public void init(){
-        commands.put("user",new UserCommand());
-        commands.put("admin",new UserCommand());
+        commands.put("user",new UserCommand(userSessionSecurity,userService));
+        commands.put("admin",new UserCommand(userSessionSecurity,userService));
         commands.put("login",new LoginUserCommand(userSessionSecurity));
         commands.put("logout",new LogoutUserCommand(userSessionSecurity));
         commands.put("registration",new RegistrationCommand(userService));
@@ -41,16 +38,9 @@ public class Servlet extends  HttpServlet {
         commands.put("editUser",new EditUserCommand(userService));
     }
 
-
     /*
-     * TODO log4j
-     *  TODO alert edituser exist
      * TODO unitTest
-     * TODO javaDOC
-     * TODO DataBase info
-     * TODO make java8
-     * TODO constants
-     * TODO session language after logout(problem with invalidate Session)*/
+    */
 
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -64,25 +54,14 @@ public class Servlet extends  HttpServlet {
 
     }
     private void processRequest(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-
         String path = request.getRequestURI();
-
         path = path.replaceAll(".*/","");
-
         Command command = commands.get(path);
         String page = command.execute(request,response);
         if (page == null){
             response.sendRedirect(request.getAttribute("redirect").toString());
         }else {
-
-
-
             request.getRequestDispatcher(page).forward(request, response);
         }
-
     }
-
-
-
-
 }

@@ -31,6 +31,13 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="/user">Navbar</a>
 
+        <div class="userInfo">
+            <fmt:message key="user.hi"/>
+            ${user.getUserName()}
+            <br>
+            Your money
+            ${user.getMoney()}
+        </div>
         <form action="/findroute" id="buttonRoutes">
             <button type="submit"><fmt:message key="find.another.routes"/></button>
         </form>
@@ -53,8 +60,6 @@
                     <c:forEach items="${listRoutes}" var="routes">
                         <tr>
                         <form action="/ticket">
-
-
                             <input type="hidden" name="idProperty" value="${routes.getIdProperty()}">
                             <th>
                                 <c:if test="${lang == 'en'}">

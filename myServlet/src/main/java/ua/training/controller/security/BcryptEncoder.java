@@ -7,7 +7,7 @@ public class BcryptEncoder {
     public  String hashPassword(String plainTextPassword){
         return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
-    public  boolean checkPass(String plainPassword, String hashedPassword) {
+    boolean checkPass(String plainPassword, String hashedPassword) {
         return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 }

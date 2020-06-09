@@ -11,7 +11,6 @@ public abstract class DaoFactory {
     public abstract ApplicationDao createApplicationDao();
     public abstract TicketDao createTicketDao();
 
-
     public static DaoFactory getInstance(){
         if( daoFactory == null ){
             synchronized (DaoFactory.class){

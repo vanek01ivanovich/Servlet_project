@@ -86,6 +86,29 @@
     </tbody>
 </table>
 
+<%--
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+
+            <a class="pag page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+
+        </li>
+        <c:forEach begin="0" end="${lengthPagination-1}" var="i">
+            <li class="page-item"><a class="pag page-link" href="?page=${i+1}">${i+1}</a></li>
+        </c:forEach>
+        <li class="page-item">
+            <a class="pag page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+--%>
+
+
 <footer class="text-white bg-dark">
     <div id="footer" class="card-footer text-muted text-white bg-dark"><fmt:message key="footer"/></div>
 </footer>

@@ -31,9 +31,7 @@ public class JDBCDestinationPropertyDao implements DestinationPropertyDao {
     }
 
     @Override
-    public void create(DestinationProperty entity) {
-
-    }
+    public void create(DestinationProperty entity) {}
 
     @Override
     public List<DestinationProperty> findAll() {
@@ -41,17 +39,17 @@ public class JDBCDestinationPropertyDao implements DestinationPropertyDao {
     }
 
     @Override
-    public void update(DestinationProperty entity) {
-
-    }
+    public void update(DestinationProperty entity) {}
 
     @Override
-    public void delete(DestinationProperty entity) {
-
-    }
+    public void delete(DestinationProperty entity) {}
 
 
-
+    /**
+     * Find english application by object Application
+     * @param application needed for finding values from db
+     * @return List of object DestinationProperty
+     */
     @Override
     public List<DestinationProperty> findAllByApplication(Application application) {
 
@@ -68,6 +66,11 @@ public class JDBCDestinationPropertyDao implements DestinationPropertyDao {
         }
     }
 
+    /**
+     * Find ukrainian application by object Application
+     * @param application needed for finding values from db
+     * @return List of object DestinationProperty
+     */
     @Override
     public List<DestinationProperty> findAllByUkrainianApplication(Application application) {
 
@@ -85,7 +88,14 @@ public class JDBCDestinationPropertyDao implements DestinationPropertyDao {
     }
 
 
-    public void findStaff(PreparedStatement preparedStatement,
+    /**
+     * Method that has access to Mappers
+     * Method uses preparedStatement
+     * @param preparedStatement needed for access to db
+     * @param destinationMap needed for putting values to mappers
+     * @param application needed for setting value in preparedStatement
+     */
+    private void findStaff(PreparedStatement preparedStatement,
                           Map<Integer, DestinationProperty> destinationMap,
                           Application application){
         try {

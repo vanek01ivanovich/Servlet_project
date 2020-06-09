@@ -13,6 +13,12 @@ public class ApplicationService {
     private ApplicationDao applicationDao = factory.createApplicationDao();
     private Application application = new Application();
 
+
+    /**
+     * Method for managing application request
+     * @param request needed for extracting parameters from user request
+     * @return Application object after applicationService
+     */
     public Application addApplication(HttpServletRequest request){
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");

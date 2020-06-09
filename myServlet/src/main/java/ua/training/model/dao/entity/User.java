@@ -5,9 +5,7 @@ import java.util.List;
 
 public class User {
 
-
     private int id;
-
     private String firstName;
     private String firstNameUkr;
     private String lastName;
@@ -15,6 +13,8 @@ public class User {
     private String role;
     private String password;
     private String userName;
+    private int money;
+    private int cardNumber;
 
     private List<DestinationProperty> destinationProperties = new ArrayList<>();
     private List<Train> trains = new ArrayList<>();
@@ -102,6 +102,24 @@ public class User {
         this.lastNameUkr = lastNameUkr;
     }
 
+
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public int getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(int cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -113,8 +131,71 @@ public class User {
                 ", role='" + role + '\'' +
                 ", password='" + password + '\'' +
                 ", userName='" + userName + '\'' +
+                ", money=" + money +
+                ", cardNumber=" + cardNumber +
                 ", destinationProperties=" + destinationProperties +
                 ", trains=" + trains +
                 '}';
     }
+
+    public User(){}
+
+    public User(Builder builder){
+        this.userName = builder.userName;
+        this.firstName = builder.firstName;
+        this.firstNameUkr = builder.firstNameUkr;
+        this.lastName = builder.lastName;
+        this.lastNameUkr = builder.lastNameUkr;
+        this.cardNumber = builder.cardNumber;
+    }
+
+    public static class Builder{
+        private int id;
+        private String firstName;
+        private String firstNameUkr;
+        private String lastName;
+        private String lastNameUkr;
+        private String role;
+        private String password;
+        private String userName;
+        private int money;
+        private int cardNumber;
+
+        public Builder(){
+        }
+
+        public Builder setFirstName(String firstName){
+            this.firstName = firstName;
+            return this;
+        }
+        public Builder setFirstNameUkr(String firstNameUkr){
+            this.firstNameUkr = firstNameUkr;
+            return this;
+        }
+        public Builder setLastName(String lastName){
+            this.lastName = lastName;
+            return this;
+        }
+        public Builder setLastNameUkr(String lastNameUkr){
+            this.lastNameUkr = lastNameUkr;
+            return this;
+        }
+
+        public Builder setUserName(String userName){
+            this.userName = userName;
+            return this;
+        }
+        public Builder setCardNumber(int cardNumber){
+            this.cardNumber = cardNumber;
+            return this;
+        }
+
+        public User build(){
+            return new User(this);
+        }
+
+
+    }
+
+
 }

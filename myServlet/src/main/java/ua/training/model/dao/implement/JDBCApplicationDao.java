@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
+
 import java.util.ResourceBundle;
 
 public class JDBCApplicationDao implements ApplicationDao {
@@ -22,12 +22,10 @@ public class JDBCApplicationDao implements ApplicationDao {
 
     private Connection connection;
 
-    public JDBCApplicationDao(Connection connection){this.connection = connection;}
+    JDBCApplicationDao(Connection connection){this.connection = connection;}
 
     @Override
-    public void create(Application entity) {
-
-    }
+    public void create(Application entity) {}
 
     @Override
     public List<Application> findAll() {
@@ -35,18 +33,19 @@ public class JDBCApplicationDao implements ApplicationDao {
     }
 
     @Override
-    public void update(Application entity) {
-
-    }
+    public void update(Application entity) {}
 
     @Override
-    public void delete(Application entity) {
+    public void delete(Application entity) {}
 
-    }
-
+    /**
+     * Returns Application object
+     * Method has connection to db and also uses preparedStatement for query
+     * @param application needed for filling application in db
+     * @return Application object
+     */
     @Override
     public Application addApplication(Application application) {
-
         try(PreparedStatement preparedStatement =
                 connection.prepareStatement(resourceBundle.getString(ADD_APPLICATION))){
                 preparedStatement.setInt(1,application.getIdUser());
@@ -61,6 +60,12 @@ public class JDBCApplicationDao implements ApplicationDao {
         return application;
     }
 
+    /**
+     * Returns ukrainian Application object
+     * Method has connection to db and also uses preparedStatement for query
+     * @param application needed for filling application in db
+     * @return ukrainian Application object
+     */
     @Override
     public Application addUkrainianApplication(Application application) {
         try (PreparedStatement preparedStatement =

@@ -31,6 +31,13 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="/user">HOME</a>
 
+        <div class="userInfo">
+            <fmt:message key="user.hi"/>
+            ${user.getUserName()}
+            <br>
+            Your money
+            ${user.getMoney()}
+        </div>
         <form action="/logout">
             <button id="logout" type="submit" class="btn btn-outline-warning"><fmt:message key="logout"/></button>
         </form>
@@ -50,7 +57,6 @@
 <div class="container card text-center">
     <div class="row">
         <div class="col-sm ">
-            <form method="post">
             <form method="post">
                 <input type="hidden" name="page" value="1">
                 <div class="form-row">

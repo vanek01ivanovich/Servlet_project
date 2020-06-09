@@ -1,7 +1,10 @@
 package ua.training.controller.commands;
 
+import org.apache.log4j.Logger;
 import ua.training.controller.constants.PageConstants;
+import ua.training.controller.security.UserSessionSecurity;
 import ua.training.model.dao.entity.DestinationProperty;
+import ua.training.model.service.PageService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,29 +19,23 @@ import static ua.training.controller.constants.CommandsUrlConstants.*;
 
 public class RoutesCommand implements Command {
 
-    private static int numberOfTickets = 3;
-    private static int start;
-    private static int end=3;
 
+    /**
+     * Method that was implemented from interface Command
+     * Also has pagination realization
+     * @param request needed to understand what method
+     * @param response implemented from interface Command
+     * @return string page depends on post or get method
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)  {
 
         HttpSession session = request.getSession();
         List<?> routes = (List<?>) session.getAttribute(LIST_ROUTES_ATTRIBUTE);
 
-        int pages = routes.size() / numberOfTickets;
-        if (routes.size() % numberOfTickets != 0){
-            pages++;
-        }
+        PageService pageService = new PageService(3, 0, 3);
+        pageService.pagination(routes,request,LIST_ROUTES_ATTRIBUTE);
 
-        if (request.getParameter(PAGE_ATTRIBUTE) != null){
-            start = numberOfTickets*(Integer.parseInt(request.getParameter(PAGE_ATTRIBUTE))-1);
-            end = pages == Integer.parseInt(request.getParameter(PAGE_ATTRIBUTE)) ? routes.size() : start+numberOfTickets;
-        }
-
-        //request.setAttribute("currentPage",Integer.parseInt(request.getParameter("page")));
-        request.setAttribute(PAGINATION_LENGTH_ATTRIBUTE, pages);
-        request.setAttribute(LIST_ROUTES_ATTRIBUTE, routes.subList(start,end));
         return ROUTES_PAGE;
 
     }

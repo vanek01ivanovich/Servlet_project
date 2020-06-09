@@ -17,8 +17,6 @@ public class DestinationProperty {
 
     private List<Destinations> destinations = new ArrayList<>();
 
-
-
     public int getIdDestination() {
         return idDestination;
     }
@@ -26,8 +24,6 @@ public class DestinationProperty {
     public void setIdDestination(int idDestination) {
         this.idDestination = idDestination;
     }
-
-
 
     public String getTimeDeparture() {
         return timeDeparture;
@@ -44,7 +40,6 @@ public class DestinationProperty {
     public void setTimeArrival(String timeArrival) {
         this.timeArrival = timeArrival;
     }
-
 
 
     public String getDateDeparture() {
@@ -71,10 +66,6 @@ public class DestinationProperty {
         this.price = price;
     }
 
-
-
-
-
     public int getIdProperty() {
         return idProperty;
     }
@@ -90,12 +81,6 @@ public class DestinationProperty {
     public void setIdTrain(int idTrain) {
         this.idTrain = idTrain;
     }
-
-
-
-
-
-
 
     public List<Train> getTrains() {
         return trains;

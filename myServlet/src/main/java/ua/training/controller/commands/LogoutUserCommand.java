@@ -20,10 +20,15 @@ public class LogoutUserCommand implements Command{
         this.userSessionSecurity = userSessionSecurity;
     }
 
+    /**
+     * Method that was implemented from interface Command
+     * @param request needed to understand what method
+     * @param response implemented from interface Command
+     * @return string page depends on post or get method
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession();
-
         userSessionSecurity.removeUserSession(session);
         request.setAttribute(LOGOUT_ATTRIBUTE,true);
         return LOGIN_PAGE;
