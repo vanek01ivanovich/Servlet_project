@@ -14,7 +14,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="title.admin.look.all.tickets"/></title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
@@ -35,16 +35,18 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="/admin">Navbar</a>
 
-        <form action="/logout">
-            <button id="logout" type="submit" class="btn btn-outline-warning"><fmt:message key="logout"/></button>
-        </form>
-        <div class="dropdown">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <fmt:message key="languages"/>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="?lang=en"><fmt:message key="english"/></a>
-                <a class="dropdown-item" href="?lang=ua"><fmt:message key="ukrainian"/></a>
+        <div class="navigationBar">
+            <form action="/logout" style="margin-right:10px">
+                <button id="logout" type="submit" class="btn btn-outline-warning"><fmt:message key="logout"/></button>
+            </form>
+            <div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <fmt:message key="languages"/>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="?lang=en"><fmt:message key="english"/></a>
+                    <a class="dropdown-item" href="?lang=ua"><fmt:message key="ukrainian"/></a>
+                </div>
             </div>
         </div>
     </nav>
@@ -119,6 +121,31 @@
         </c:forEach>
     </tbody>
 </table>
+
+<%--<c:if test="${pagination == true}">--%>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+
+                <a class="pag page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+
+            </li>
+            <c:forEach begin="0" end="${lengthPagination-1}" var="i">
+                <li class="page-item"><a class="pag page-link" href="?page=${i+1}">${i+1}</a></li>
+            </c:forEach>
+            <li class="page-item">
+                <a class="pag page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<%--</c:if>--%>
+
+
+
 <footer class="text-white bg-dark">
     <div id="footer" class="card-footer text-muted text-white bg-dark"><fmt:message key="footer"/></div>
 </footer>

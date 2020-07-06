@@ -14,7 +14,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title><fmt:message key="title.error"/></title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -32,16 +32,18 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="/user">HOME</a>
 
-        <form action="/logout">
-            <button id="logout" type="submit" class="btn btn-outline-warning">logout</button>
-        </form>
-        <div class="dropdown">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Languages
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="?lang=en">English</a>
-                <a class="dropdown-item" href="?lang=ua">Ukrainian</a>
+        <div class="navigationBar">
+            <form action="/logout" style="margin-right:10px">
+                <button id="logout" type="submit" class="btn btn-outline-warning">logout</button>
+            </form>
+            <div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <fmt:message key="languages"/>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="?lang=en"><fmt:message key="english"/></a>
+                    <a class="dropdown-item" href="?lang=ua"><fmt:message key="ukrainian"/></a>
+                </div>
             </div>
         </div>
     </nav>
@@ -49,12 +51,12 @@
 <div class="container card text-center">
     <div class="row">
         <div class="col-sm ">
-            <h1>ERROR!</h1>
+            <h1> <fmt:message key="error"/></h1>
         </div>
     </div>
 </div>
 <footer class="text-white bg-dark">
-    <div id="footer" class="card-footer text-muted text-white bg-dark">© 2020 Copyright:All rights reserved</div>
+    <div id="footer" class="card-footer text-muted text-white bg-dark"> <fmt:message key="footer"/></div>
 </footer>
 </body>
 </html>

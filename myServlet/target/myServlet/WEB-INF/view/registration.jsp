@@ -13,7 +13,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="title.registration"/></title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -30,13 +30,16 @@
 <header>
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="/login">HOME</a>
-        <div class="dropdown">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <fmt:message key="languages"/>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="?lang=en"><fmt:message key="english"/></a>
-                <a class="dropdown-item" href="?lang=ua"><fmt:message key="ukrainian"/></a>
+
+        <div class="navigationBar">
+            <div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <fmt:message key="languages"/>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="?lang=en"><fmt:message key="english"/></a>
+                    <a class="dropdown-item" href="?lang=ua"><fmt:message key="ukrainian"/></a>
+                </div>
             </div>
         </div>
     </nav>
@@ -55,11 +58,11 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><fmt:message key="user.name"/></span>
                             </div>
-                            <input name="userName" type="text" class="form-control" id="validationServerUsername" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            <input value="${user.getUserName()}"  name="userName" type="text" required class="form-control" id="validationServerUsername" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                     </div>
                     <c:if test="${validUserName == false}">
                         <div class="alert alert-danger" role="alert">
-                            user LOL
+                            <fmt:message key="regex.userName.error"/>
                         </div>
                     </c:if>
 
@@ -67,11 +70,11 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><fmt:message key="first.name"/></span>
                         </div>
-                        <input name="firstName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                        <input value="${user.getFirstName()}" name="firstName" type="text" required class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                     </div>
                     <c:if test="${validFirstName == false}">
                         <div class="alert alert-danger" role="alert">
-                            firstName LOL
+                            <fmt:message key="regex.firstName.error"/>
                         </div>
                     </c:if>
 
@@ -82,11 +85,11 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><fmt:message key="last.name"/></span>
                         </div>
-                        <input name="lastName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                        <input required value="${user.getLastName()}" name="lastName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                     </div>
                         <c:if test="${validLastName == false}">
                             <div class="alert alert-danger" role="alert">
-                                lastName LOL
+                                <fmt:message key="regex.lastName.error"/>
                             </div>
                         </c:if>
 
@@ -94,11 +97,11 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><fmt:message key="ukr.first.name"/></span>
                         </div>
-                        <input name="ukrFirstName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                        <input required value="${user.getFirstNameUkr()}" name="ukrFirstName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                     </div>
                         <c:if test="${validFirstNameUkr == false}">
                             <div class="alert alert-danger" role="alert">
-                                firtstNAme ukr LOL
+                                <fmt:message key="regex.firstNameUkr.error"/>
                             </div>
                         </c:if>
 
@@ -107,20 +110,32 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><fmt:message key="ukr.last.name"/></span>
                         </div>
-                        <input name="ukrLastName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                        <input required value="${user.getLastNameUkr()}" name="ukrLastName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                     </div>
                         <c:if test="${validLastNameUkr == false}">
                             <div class="alert alert-danger" role="alert">
-                                lastName ukr LOL
+                                <fmt:message key="regex.lastNameUkr.error"/>
                             </div>
                         </c:if>
 
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
+                            <span class="input-group-text">Card Number</span>
+                        </div>
+                        <input required value="${user.getCardNumber()}" name="cardNumber" type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                        <c:if test="${validUserCardNumber == false}">
+                            <div class="alert alert-danger" role="alert">
+                                <fmt:message key="regex.cardNumber.error"/>
+                            </div>
+                        </c:if>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
                             <span class="input-group-text"><fmt:message key="password"/></span>
                         </div>
-                        <input name="password" type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                        <input required name="password" type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                     </div>
                 </div>
 
@@ -132,9 +147,6 @@
     </div>
 
 </div>
-<form action="/login">
-    <button type="submit"><fmt:message key="back"/></button>
-</form>
 
 <footer class="text-white bg-dark">
     <div id="footer" class="card-footer text-muted text-white bg-dark"><fmt:message key="footer"/></div>
@@ -149,11 +161,17 @@
             text:"Regex"
         });
     }
+    if (al === "2"){
+        swal({
+            icon:"error",
+            text:"exist card"
+        });
+    }
 
     if (al === "0"){
         swal({
             icon:"error",
-            text:"exist"
+            text:"exist userName"
         });
     }
 </script>

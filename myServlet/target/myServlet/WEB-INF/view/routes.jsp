@@ -13,7 +13,7 @@
 <fmt:setBundle basename="messages"/>
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="title.destinations"/></title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -31,16 +31,25 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="/user">Navbar</a>
 
-        <form action="/findroute" id="buttonRoutes">
-            <button type="submit"><fmt:message key="find.another.routes"/></button>
-        </form>
-        <div class="dropdown">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <fmt:message key="languages"/>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="?lang=en"><fmt:message key="english"/></a>
-                <a class="dropdown-item" href="?lang=ua"><fmt:message key="ukrainian"/></a>
+        <div class="userInfo">
+            <fmt:message key="user.hi"/>
+            ${user.getUserName()}
+            <br>
+            <fmt:message key="money"/>
+            ${user.getMoney()}
+        </div>
+        <div class="navigationBar">
+            <form action="/findroute" id="buttonRoutes" >
+                <button type="submit"><fmt:message key="find.another.routes"/></button>
+            </form>
+            <div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <fmt:message key="languages"/>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="?lang=en"><fmt:message key="english"/></a>
+                    <a class="dropdown-item" href="?lang=ua"><fmt:message key="ukrainian"/></a>
+            </div>
         </div>
     </div>
     </nav>
@@ -53,8 +62,6 @@
                     <c:forEach items="${listRoutes}" var="routes">
                         <tr>
                         <form action="/ticket">
-
-
                             <input type="hidden" name="idProperty" value="${routes.getIdProperty()}">
                             <th>
                                 <c:if test="${lang == 'en'}">

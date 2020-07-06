@@ -10,6 +10,10 @@ header{
 html{
     height: 100%;
 }
+.userInfo{
+    color: white;
+}
+
 
 p.str675:after {
     content: '\21D2';

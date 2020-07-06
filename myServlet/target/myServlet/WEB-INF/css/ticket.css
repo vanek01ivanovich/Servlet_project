@@ -31,6 +31,10 @@ footer {
 
 }*/
 
+.userInfo{
+    color: white;
+}
+
 .info{
     display: flex;
     justify-content: space-between;
