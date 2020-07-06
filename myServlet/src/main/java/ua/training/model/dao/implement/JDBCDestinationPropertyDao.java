@@ -46,7 +46,7 @@ public class JDBCDestinationPropertyDao implements DestinationPropertyDao {
 
 
     /**
-     * Find english application by object Application
+     * Find english destinations by object Application
      * @param application needed for finding values from db
      * @return List of object DestinationProperty
      */
@@ -67,7 +67,7 @@ public class JDBCDestinationPropertyDao implements DestinationPropertyDao {
     }
 
     /**
-     * Find ukrainian application by object Application
+     * Find ukrainian destinations by object Application
      * @param application needed for finding values from db
      * @return List of object DestinationProperty
      */

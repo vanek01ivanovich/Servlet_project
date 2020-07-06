@@ -18,7 +18,7 @@ public class LoginUserCommand implements Command {
     private DaoFactory factory = DaoFactory.getInstance();
     private UserDao userDao = factory.createUserDao();
     private  UserSessionSecurity userSessionSecurity;
-    private static final Logger log = Logger.getLogger(UserSessionSecurity.class);
+    private static final Logger log = Logger.getLogger(LoginUserCommand.class);
 
     public LoginUserCommand(UserSessionSecurity userSessionSecurity) {
         this.userSessionSecurity = userSessionSecurity;

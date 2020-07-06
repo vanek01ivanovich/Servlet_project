@@ -17,7 +17,7 @@ public class UserCommand implements Command{
 
     private UserSessionSecurity userSessionSecurity;
     private UserService userService;
-    private static final Logger log = Logger.getLogger(UserSessionSecurity.class);
+    private static final Logger log = Logger.getLogger(UserCommand.class);
 
     public UserCommand(UserSessionSecurity userSessionSecurity,UserService userService){
         this.userSessionSecurity = userSessionSecurity;
@@ -34,7 +34,6 @@ public class UserCommand implements Command{
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER_ATTRIBUTE);
-
 
         if (request.getMethod().equalsIgnoreCase(POST_METHOD)){
             return userPostMethodTopUpMoney(request,user);

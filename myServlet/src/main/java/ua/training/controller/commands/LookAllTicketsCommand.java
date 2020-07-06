@@ -16,15 +16,13 @@ import static ua.training.controller.constants.CommandsUrlConstants.*;
 public class LookAllTicketsCommand implements Command {
 
     private TicketService ticketService;
-   /* private static int numberOfTickets = 15;
-    private static int start;
-    private static int end=15;*/
 
     public LookAllTicketsCommand(TicketService ticketService){
         this.ticketService = ticketService;
     }
 
     /**
+     * Method gets all tickets
      * Method that was implemented from interface Command
      * Also method has pagination realization
      * @param request needed to understand what method
@@ -35,13 +33,13 @@ public class LookAllTicketsCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         List<User> userAndTickets = ticketService.getAllUsersTickets();
 
-        if (userAndTickets.size() >= 15){
-            PageService pageService = new PageService(15,0,15);
+       // if (userAndTickets.size() >= 15){
+            PageService pageService = new PageService(4,0,Math.min(userAndTickets.size(), 4));
             pageService.pagination(userAndTickets,request,ALL_TICKET_ATTRIBUTE);
-        }else{
-            request.setAttribute("pagination",false);
-            request.setAttribute(ALL_TICKET_ATTRIBUTE,userAndTickets);
-        }
+        //}else{
+          //  request.setAttribute("pagination",false);
+            //request.setAttribute(ALL_TICKET_ATTRIBUTE,userAndTickets);
+        //}
 
         return ALL_TICKETS_PAGE;
     }

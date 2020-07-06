@@ -20,7 +20,7 @@ public class TicketCommand implements Command {
     private TicketService ticketService;
     private static String idProperty;
     private static DestinationProperty destinationProperty;
-    private static final Logger log = Logger.getLogger(UserSessionSecurity.class);
+    private static final Logger log = Logger.getLogger(TicketCommand.class);
 
     public TicketCommand(TicketService ticketService){
         this.ticketService = ticketService;
@@ -58,8 +58,13 @@ public class TicketCommand implements Command {
             log.error("USER " + user.getUserName() + "CAN`T BUY TICKET,NOT ENOUGH MONEY");
             return TICKET_PAGE;
         }
-        request.setAttribute(REDIRECT_ATTRIBUTE,"/findroute");
-        return null;
+       /* request.setAttribute(REDIRECT_ATTRIBUTE,"/findroute");
+        return null;*/
+        request.setAttribute(ALERT_ATTRIBUTE, 1);
+        request.setAttribute(USER_ATTRIBUTE,user);
+        request.setAttribute(TICKET_ATTRIBUTE, destinationProperty);
+        return TICKET_PAGE;
+
     }
 
     /**

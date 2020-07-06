@@ -20,7 +20,7 @@ public class RegistrationCommand implements Command {
 
     private UserService userService;
     private  User user;
-    private static final Logger log = Logger.getLogger(UserSessionSecurity.class);
+    private static final Logger log = Logger.getLogger(RegistrationCommand.class);
 
     public RegistrationCommand(UserService userService){
         this.userService = userService;

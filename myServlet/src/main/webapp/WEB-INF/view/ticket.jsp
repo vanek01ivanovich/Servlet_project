@@ -15,7 +15,7 @@
 <html>
 <head>
     <link rel="icon" href="data:,">
-    <title>Title</title>
+    <title><fmt:message key="title.ticket"/></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -37,19 +37,21 @@
             <fmt:message key="user.hi"/>
             ${user.getUserName()}
             <br>
-            Your money
+            <fmt:message key="money"/>
             ${user.getMoney()}
         </div>
-        <form action="/logout">
-            <button id="logout" type="submit" class="btn btn-outline-warning"><fmt:message key="logout"/></button>
-        </form>
-        <div class="dropdown">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <fmt:message key="languages"/>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="?lang=en"><fmt:message key="english"/></a>
-                <a class="dropdown-item" href="?lang=ua"><fmt:message key="ukrainian"/></a>
+        <div class="navigationBar">
+            <form action="/logout" style="margin-right:10px">
+                <button id="logout" type="submit" class="btn btn-outline-warning"><fmt:message key="logout"/></button>
+            </form>
+            <div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <fmt:message key="languages"/>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="?lang=en"><fmt:message key="english"/></a>
+                    <a class="dropdown-item" href="?lang=ua"><fmt:message key="ukrainian"/></a>
+                </div>
             </div>
         </div>
     </nav>
@@ -63,15 +65,24 @@
     <div class="card-body">
 
             <input type="hidden" name="idProperty" value="${ticket.getIdProperty()}">
-        <%--TODO ukr last first name--%>
             <div class="info">
                 <span><fmt:message key="first.name"/></span>
-                ${user.getFirstName()}
+                <c:if test="${lang == 'en'}">
+                    ${user.getFirstName()}
+                </c:if>
+                <c:if test="${lang == 'ua'}">
+                    ${user.getFirstNameUkr()}
+                </c:if>
             </div>
 
             <div class="info">
                 <span><fmt:message key="last.name"/></span>
-                ${user.getLastName()}
+                <c:if test="${lang == 'en'}">
+                    ${user.getLastName()}
+                </c:if>
+                <c:if test="${lang == 'ua'}">
+                    ${user.getLastNameUkr()}
+                </c:if>
             </div>
 
             <div class="info">
@@ -152,15 +163,28 @@
     <div id="footer" class="card-footer text-muted text-white bg-dark"><fmt:message key="footer"/></div>
 </footer>
 
+<fmt:message key="not.enough.money" var="errorAlert"/>
 <script>
     var al = document.getElementById("button").value;
 
     if (al === "0"){
         swal({
             icon:"error",
-            text:"Top-up your money bro!"
+            text:"${errorAlert}"
         });
     }
+    if (al === "1"){
+
+        swal({
+            icon:"success",
+            text:"Success",
+        });
+
+        window.location = '/findroute';
+
+
+    }
+
 </script>
 </body>
 </html>

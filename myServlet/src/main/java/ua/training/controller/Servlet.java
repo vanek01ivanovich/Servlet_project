@@ -38,11 +38,6 @@ public class Servlet extends  HttpServlet {
         commands.put("editUser",new EditUserCommand(userService));
     }
 
-    /*
-     * TODO unitTest
-    */
-
-
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request,response);

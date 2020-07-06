@@ -33,7 +33,7 @@ public class RoutesCommand implements Command {
         HttpSession session = request.getSession();
         List<?> routes = (List<?>) session.getAttribute(LIST_ROUTES_ATTRIBUTE);
 
-        PageService pageService = new PageService(3, 0, 3);
+        PageService pageService = new PageService(3, 0, Math.min(routes.size(), 3));
         pageService.pagination(routes,request,LIST_ROUTES_ATTRIBUTE);
 
         return ROUTES_PAGE;

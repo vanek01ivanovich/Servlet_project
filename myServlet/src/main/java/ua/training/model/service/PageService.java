@@ -31,7 +31,7 @@ public class PageService {
 
         if (request.getParameter(PAGE_ATTRIBUTE) != null){
             start = numberOfTickets*(Integer.parseInt(request.getParameter(PAGE_ATTRIBUTE))-1);
-            end = pages == Integer.parseInt(request.getParameter(PAGE_ATTRIBUTE)) ? items.size() : start+numberOfTickets;
+            end = Math.min((start + numberOfTickets), items.size());
         }
 
         request.setAttribute("pagination",true);

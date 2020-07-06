@@ -17,10 +17,11 @@ import static ua.training.controller.constants.PageConstants.*;
 
 public class EditUserCommand implements Command {
 
-    private static final Logger log = Logger.getLogger(UserSessionSecurity.class);
+    private static final Logger log = Logger.getLogger(EditUserCommand.class);
 
     private UserService userService;
     private static User user;
+    private static String idUser;
 
     public EditUserCommand(UserService userService) {
         this.userService = userService;
@@ -50,8 +51,10 @@ public class EditUserCommand implements Command {
      */
     private String editUserGetMethod(HttpServletRequest request,HttpSession session){
         List<User> userList = (List<User>) session.getAttribute(USERS_LIST_ATTRIBUTES);
+        idUser = request.getParameter(RequestConstants.USER_ID_PARAMETER) == null ? idUser:
+                request.getParameter(RequestConstants.USER_ID_PARAMETER);
         user = userList.stream()
-                .filter(u -> u.getId() == Integer.parseInt(request.getParameter(RequestConstants.USER_ID_PARAMETER)))
+                .filter(u -> u.getId() == Integer.parseInt(idUser))
                 .findAny()
                 .orElse(null);
         request.setAttribute(USER_ATTRIBUTE, user);

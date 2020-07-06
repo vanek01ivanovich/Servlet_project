@@ -20,3 +20,8 @@ footer {
     color: black;
 
 }
+
+.navigationBar{
+    display: inherit;
+    margin-right: 100px;
+}

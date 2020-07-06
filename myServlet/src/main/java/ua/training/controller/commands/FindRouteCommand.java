@@ -19,7 +19,7 @@ public class FindRouteCommand implements Command {
     private HttpSession session;
     private DestinationPropertyService destinationPropertyService;
     private ApplicationService applicationService;
-    private static final Logger log = Logger.getLogger(UserSessionSecurity.class);
+    private static final Logger log = Logger.getLogger(FindRouteCommand.class);
 
     public FindRouteCommand(DestinationPropertyService destinationPropertyService,ApplicationService applicationService){
         this.destinationPropertyService = destinationPropertyService;
@@ -59,7 +59,7 @@ public class FindRouteCommand implements Command {
             session.setAttribute(LIST_ROUTES_ATTRIBUTE,destinationProperties);
             return null;
         }else{
-            log.info("ERROR LIST ROUTES ON " + request.getParameter("date") +
+            log.error("ERROR LIST ROUTES ON " + request.getParameter("date") +
                     " FROM " + request.getParameter("stationFrom") +
                     " TO " + request.getParameter("stationTo") + " IS EMPTY");
             request.setAttribute(EMPTY_MESSAGE_ATTRIBUTE,true);

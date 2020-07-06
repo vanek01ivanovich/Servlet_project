@@ -51,14 +51,9 @@ public class LookAllUsersCommand implements Command {
 
         listUsers.removeIf(u -> u.getUserName().equals(user.getUserName()));
 
-        if (listUsers.size() >= 15){
-            PageService pageService = new PageService(15,0,15);
-            pageService.pagination(listUsers,request,USERS_LIST_ATTRIBUTES);
+        PageService pageService = new PageService(4,0,Math.min(listUsers.size(), 4));
+        pageService.pagination(listUsers,request,ALL_USERS_ATTRIBUTE);
 
-        }else{
-            request.setAttribute("pagination",false);
-            request.setAttribute(ALL_USERS_ATTRIBUTE, listUsers);
-        }
 
         session.setAttribute(USERS_LIST_ATTRIBUTES,listUsers);
         return ALL_USERS_PAGE;

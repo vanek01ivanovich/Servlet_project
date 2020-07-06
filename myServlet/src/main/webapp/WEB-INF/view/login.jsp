@@ -13,7 +13,7 @@
 <fmt:setBundle basename="messages"/>
 <html>
 <head>
-    <title>Title</title>
+    <title>title.login</title>
     <link rel="icon" href="data:,">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -32,13 +32,15 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="/login">Navbar</a>
 
-        <div class="dropdown">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <fmt:message key="languages"/>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="?lang=en"><fmt:message key="english"/></a>
-                <a class="dropdown-item" href="?lang=ua"><fmt:message key="ukrainian"/></a>
+        <div class="navigationBar">
+            <div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <fmt:message key="languages"/>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="?lang=en"><fmt:message key="english"/></a>
+                    <a class="dropdown-item" href="?lang=ua"><fmt:message key="ukrainian"/></a>
+                </div>
             </div>
         </div>
     </nav>
